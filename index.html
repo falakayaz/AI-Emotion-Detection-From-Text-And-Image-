@@ -1,0 +1,77 @@
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Upload } from "lucide-react";
+import { motion } from "framer-motion";
+
+export default function ResponsiveAIUI() {
+  const [text, setText] = useState("");
+  const [image, setImage] = useState(null);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-4xl"
+      >
+        <Card className="rounded-2xl shadow-xl">
+          <CardContent className="p-6 md:p-10">
+            <h1 className="text-2xl md:text-3xl font-bold text-center mb-6">
+              AI Emotion Detector
+            </h1>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Text Input */}
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Enter Text
+                </label>
+                <textarea
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="Type your text here..."
+                  className="w-full h-40 p-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                />
+              </div>
+
+              {/* Image Upload */}
+              <div className="flex flex-col justify-between">
+                <label className="block text-sm font-medium mb-2">
+                  Upload Image
+                </label>
+                <div className="flex-1 border-2 border-dashed rounded-xl flex items-center justify-center text-gray-500">
+                  {image ? image.name : "No image selected"}
+                </div>
+                <Button
+                  variant="outline"
+                  className="mt-3 rounded-xl"
+                  onClick={() => document.getElementById("imageInput").click()}
+                >
+                  <Upload className="mr-2 h-4 w-4" /> Choose Image
+                </Button>
+                <input
+                  id="imageInput"
+                  type="file"
+                  className="hidden"
+                  onChange={(e) => setImage(e.target.files[0])}
+                />
+              </div>
+            </div>
+
+            <div className="mt-8 text-center">
+              <Button className="px-8 py-3 rounded-2xl text-lg">
+                Analyze Emotion
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        <p className="text-center text-sm text-gray-500 mt-4">
+          Fully responsive • Works on mobile & desktop
+        </p>
+      </motion.div>
+    </div>
+  );
+}
